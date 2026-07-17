@@ -3081,11 +3081,7 @@ export function AccountantDashboard({ activeTab = "dashboard" }: { activeTab?: s
 // ============================================================================
 function HospitalConfigView() {
   const { exportFhirPatient, exportHl7Patient } = useEhr();
-  const [hospitals, setHospitals] = useState([
-    { id: "hosp-1", name: "St. Mary's General Hospital", code: "SMGH-01", address: "742 Evergreen Terrace, Springfield", beds: 85, depts: 35, status: "ACTIVE", type: "General" },
-    { id: "hosp-2", name: "Mercy Clinical Annex", code: "MCA-02", address: "112 Ocean Avenue, Amityville", beds: 15, depts: 8, status: "ACTIVE", type: "Outpatient" },
-    { id: "hosp-3", name: "Aether Regional Lab Center", code: "ARLC-03", address: "550 Broad St, North City", beds: 0, depts: 4, status: "MAINTENANCE", type: "Diagnostic" }
-  ]);
+  const [hospitals, setHospitals] = useState<any[]>([]);
 
   const [newName, setNewName] = useState("");
   const [newCode, setNewCode] = useState("");
@@ -3217,11 +3213,7 @@ function HospitalConfigView() {
 }
 
 function SecurityApiView() {
-  const [apiKeys, setApiKeys] = useState([
-    { id: "key-1", name: "PACS DICOM Gateway Integration", key: "ae_live_8f0a82b991cd4a22b918a", created: "2026-04-10", scope: "Imaging READ/WRITE" },
-    { id: "key-2", name: "FHIR Interoperability Exchange Sync", key: "ae_live_f1947b0a88cd42a2b9d88", created: "2026-05-15", scope: "Patient Records READ" },
-    { id: "key-3", name: "Athena Health Split-Invoicing Gateway", key: "ae_live_77e02b8d4ab2087c9bc35", created: "2026-06-20", scope: "Financial READ/WRITE" }
-  ]);
+  const [apiKeys, setApiKeys] = useState<any[]>([]);
 
   const [newKeyName, setNewKeyName] = useState("");
   const [newKeyScope, setNewKeyScope] = useState("Patient Records READ");

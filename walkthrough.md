@@ -116,6 +116,12 @@ We have successfully implemented a secure session login interface for the Aether
       - Added a state-driven blurred backdrop overlay inside [page.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/page.tsx) that renders at `z-20` on mobile when the sidebar drawer is open. Clicking the overlay automatically closes it.
       - Integrated a hamburger menu button inside [Header.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/Header.tsx) (visible on mobile only) to toggle the sidebar open state.
       - Auto-closes the mobile drawer navigation once a menu item is tapped, optimizing UX flow.
+16. **Demo Data Elimination**:
+    - **Files modified**: [route.ts](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/api/%5B%5B...route%5D%5D/route.ts), [RoleDashboards.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/RoleDashboards.tsx)
+    - **Modifications**:
+      - **Database Seed Clean-up:** Modified the `ensureMetadataSeeded` function in [route.ts](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/api/%5B%5B...route%5D%5D/route.ts) to strip out all database-level demo entities (including mock hospitals, departments, staff profiles, clinical rooms, beds, and inventory drug items). Only the core roles metadata required for access structure remains.
+      - **Frontend Interface Clean-up:** Modified [RoleDashboards.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/RoleDashboards.tsx) to clear out all hardcoded client-side mock arrays: set default states for `hospitals` (in `HospitalConfigView`) and `apiKeys` (in `SecurityApiView`) to empty arrays (`[]`). The UI is now purely database-driven with no fallback mock records.
+
 
 
 
