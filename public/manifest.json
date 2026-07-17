@@ -1,0 +1,17 @@
+{
+  "short_name": "AetherEHR",
+  "name": "Aether Cloud EHR System",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0b0f19",
+  "theme_color": "#3b82f6",
+  "display": "standalone",
+  "orientation": "any"
+}

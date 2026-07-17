@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #f8fafc;
+    --foreground: #0f172a;
+    
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-muted: #dbeafe;
+    
+    --secondary: #64748b;
+    --secondary-foreground: #ffffff;
+    
+    --accent: #f1f5f9;
+    --accent-foreground: #0f172a;
+    
+    --border: #e2e8f0;
+    --input: #f1f5f9;
+    --ring: rgba(37, 99, 235, 0.2);
+    
+    --radius: 0.75rem;
+    color-scheme: light;
+  }
+
+  .dark {
+    --background: #0b0f19;
+    --foreground: #f8fafc;
+    
+    --card: #131c2e;
+    --card-foreground: #f8fafc;
+    
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --primary-muted: #1e293b;
+    
+    --secondary: #94a3b8;
+    --secondary-foreground: #0f172a;
+    
+    --accent: #1e293b;
+    --accent-foreground: #f8fafc;
+    
+    --border: #1e293b;
+    --input: #1e293b;
+    --ring: rgba(59, 130, 246, 0.3);
+    color-scheme: dark;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased transition-colors duration-200;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  pre, code, kbd {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Glassmorphism helpers */
+.glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(19, 28, 46, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Card custom styles */
+.card-hover {
+  @apply transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg;
+}
+
+/* Animate Pulse for live queues */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.pulse-soft {
+  animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
