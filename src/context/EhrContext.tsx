@@ -53,7 +53,7 @@ export interface Vitals {
   systolicBp: number;
   diastolicBp: number;
   heartRate: number;
-  respiratoryRate: number;
+  respiratoryRate?: number;
   oxygenSaturation: number; // %
   weight?: number; // kg (optional)
   height?: number; // cm (optional)

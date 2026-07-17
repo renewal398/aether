@@ -103,4 +103,8 @@ We have successfully implemented a secure session login interface for the Aether
 12. **AuditLog TypeScript Resolution**:
     - **File modified**: [route.ts](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/api/%5B%5B...route%5D%5D/route.ts)
     - **Modifications**: Resolved compilation errors `TS2353` and `TS2339` concerning the `details` field (which is not a primary column in the Prisma schema for the `AuditLog` model). Re-routed `details` metadata storage into the JSON `newValues` column upon audit log creation, and dynamically read/parsed the value during fetch mapping.
+13. **Vitals Compilation Resolution**:
+    - **File modified**: [EhrContext.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/context/EhrContext.tsx)
+    - **Modifications**: Made the `respiratoryRate` property optional inside the `Vitals` interface definition. This correctly aligns the frontend type declaration with the optional nature of the database model (`respiratoryRate Int?` in the Prisma schema) and resolves compile-time type mismatch errors on Vercel/Next.js builds when the respiratory rate field is omitted.
+
 
