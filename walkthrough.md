@@ -81,13 +81,26 @@ We have successfully implemented a secure session login interface for the Aether
 ## Verification and Testing
 
 ### Compilation Verification
-- [x] Compilation check: verified that layout.tsx, Sidebar.tsx, and page.tsx build successfully.
+- [x] Compilation check: verified that layout.tsx, Sidebar.tsx, page.tsx, route.ts, and API endpoint files build successfully.
 9. **Logo and Favicon Restoration**:
-   - **Files modified**: [layout.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/layout.tsx), [Sidebar.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/Sidebar.tsx), [LoginScreen.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/LoginScreen.tsx), [page.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/page.tsx)
+   - **Files modified/created**: [layout.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/layout.tsx), [Sidebar.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/Sidebar.tsx), [LoginScreen.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/LoginScreen.tsx), [page.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/page.tsx), [route.ts](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/favicon.ico/route.ts) (NEW)
    - **Modifications**: 
+     - Created a Next.js route handler at [route.ts](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/favicon.ico/route.ts) that intercepts standard/legacy browser requests to `/favicon.ico` and serves the vector `Ω` logo SVG with the correct `image/svg+xml` headers.
      - Added explicit `<link>` tags in the HTML `<head>` block pointing to `/icon.svg` as both the standard and shortcut icon.
      - Swapped out all path-based `<img src="/icon.svg">` tags across [Sidebar.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/Sidebar.tsx), [LoginScreen.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/LoginScreen.tsx), and [page.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/page.tsx) with robust **inline SVG** elements rendering the official `Ω` logo. This guarantees the logo renders correctly under all routing, server, and client environments.
      - Ensured the `Ω` logo remains visible inside the expanded sidebar header, but is completely hidden when the sidebar is collapsed (matching the original design).
-10. **Git Configuration**:
-    - **File created**: [.gitignore](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/.gitignore)
-    - **Modifications**: Created a comprehensive `.gitignore` configuration ignoring local `.env`, `.env.local` files, `node_modules/`, `.next/` builds, and IDE workspace configs to prevent credentials/build files from leaking to GitHub.
+10. **Git Configuration & Licensing**:
+    - **Files created/modified**: [.gitignore](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/.gitignore), [LICENSE](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/LICENSE), [robots.txt](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/public/robots.txt) (NEW), [setup_db.sql](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/setup_db.sql) (NEW)
+    - **Modifications**: 
+      - Created a comprehensive `.gitignore` configuration ignoring local `.env` and `setup_db.sql` database setup scripts.
+      - Wrote a proprietary [LICENSE](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/LICENSE) file stating that the software is private and confidential.
+      - Created [robots.txt](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/public/robots.txt) to explicitly block crawling bots and search engines from indexing the `/api/` routing structure.
+11. **Database Setup Endpoint**:
+    - **File modified**: [route.ts](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/api/%5B%5B...route%5D%5D/route.ts)
+    - **Modifications**:
+      - Wrote a new `GET /api/iykyk` route that reads [setup_db.sql](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/setup_db.sql) and executes the DDL raw query string in the database using Prisma `$executeRawUnsafe()`, creating all necessary schema tables.
+      - Implemented strict scraper evasion: sets `X-Robots-Tag: noindex, nofollow, noarchive, nosnippet` and `Cache-Control` headers, and scans request User-Agents against a regex pattern containing known crawlers, scanner engines, and scripting clients (such as sqlmap, nmap, nikto, curl, wget, python). If detected, it mimics a 404 response to keep the route hidden.
+12. **AuditLog TypeScript Resolution**:
+    - **File modified**: [route.ts](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/api/%5B%5B...route%5D%5D/route.ts)
+    - **Modifications**: Resolved compilation errors `TS2353` and `TS2339` concerning the `details` field (which is not a primary column in the Prisma schema for the `AuditLog` model). Re-routed `details` metadata storage into the JSON `newValues` column upon audit log creation, and dynamically read/parsed the value during fetch mapping.
+

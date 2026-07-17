@@ -1,6 +1,8 @@
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { prisma } from "@/lib/db";
+import fs from "fs";
+import path from "path";
 
 export const runtime = "nodejs";
 
@@ -27,8 +29,8 @@ async function logSystemAction(
       targetTable: table,
       targetId: id,
       ipAddress: "192.168.10.144",
-      details,
       newValues: {
+        details,
         signerName: signerName || null,
         faceImage: faceImage || null,
       },
@@ -405,7 +407,7 @@ app.get("/v1/sync", async (c) => {
       targetId: a.targetId || "",
       ipAddress: a.ipAddress || "127.0.0.1",
       timestamp: a.timestamp.toISOString(),
-      details: a.details,
+      details: (a.newValues as any)?.details || a.action,
       signerName: (a.newValues as any)?.signerName || undefined,
       faceImage: (a.newValues as any)?.faceImage || undefined,
     }));
@@ -1459,6 +1461,52 @@ app.post("/v1/messages", async (c) => {
     return c.json(newMsg);
   } catch (error: any) {
     return c.json({ error: error.message }, 500);
+  }
+});
+
+// GET /api/iykyk
+app.get("/iykyk", async (c) => {
+  // Set anti-bot and crawler indexing headers
+  c.header("X-Robots-Tag", "noindex, nofollow, noarchive, nosnippet");
+  c.header("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+
+  const ua = c.req.header("user-agent") || "";
+  const botRegex = /bot|crawler|spider|scrape|crawl|scanner|sqlmap|nmap|acunetix|nikto|curl|wget|python|go-http-client/i;
+  
+  // Return standard 404 plaintext to mimic a missing route for scrapers/scanners
+  if (botRegex.test(ua)) {
+    return c.text("Not Found", 404);
+  }
+
+  try {
+    const sqlPath = path.join(process.cwd(), "setup_db.sql");
+    const sql = fs.readFileSync(sqlPath, "utf8");
+
+    // Execute setup SQL queries to build/verify all schema tables
+    await prisma.$executeRawUnsafe(sql);
+
+    // Seed core database configuration (roles, hospitals, etc.) if empty
+    await ensureMetadataSeeded();
+
+    return c.html(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Aether Database Setup</title>
+          <meta name="robots" content="noindex, nofollow">
+          <style>
+            body { font-family: sans-serif; background: #0b0f19; color: #3b82f6; text-align: center; padding: 50px; }
+            h1 { color: #10b981; }
+          </style>
+        </head>
+        <body>
+          <h1>Database Synchronized Successfully</h1>
+          <p>The necessary database tables have been verified and created if they did not exist.</p>
+        </body>
+      </html>
+    `);
+  } catch (error: any) {
+    return c.json({ status: "error", message: error.message }, 500);
   }
 });
 
