@@ -28,6 +28,7 @@ function MainAppContent() {
   const [activeTab, setActiveTabRaw] = useState("dashboard");
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isMessageOpen, setIsMessageOpen] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // Safe wrapper to update state and localStorage
   const setActiveTab = (tab: string) => {
@@ -135,13 +136,23 @@ function MainAppContent() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex">
+    <div className="min-h-screen bg-background text-foreground flex overflow-x-hidden">
+      {/* Mobile Drawer Overlay */}
+      {mobileSidebarOpen && (
+        <div
+          onClick={() => setMobileSidebarOpen(false)}
+          className="fixed inset-0 z-20 bg-black/40 backdrop-blur-sm md:hidden animate-fade-in"
+        />
+      )}
+
       {/* Navigation Drawer */}
       <Sidebar
         collapsed={sidebarCollapsed}
         setCollapsed={setSidebarCollapsed}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        mobileOpen={mobileSidebarOpen}
+        setMobileOpen={setMobileSidebarOpen}
       />
 
       {/* Main Core Layout Wrapper */}
@@ -149,7 +160,10 @@ function MainAppContent() {
         sidebarCollapsed ? "md:pl-16" : "md:pl-64"
       }`}>
         {/* Global Toolbar Header */}
-        <Header onSearchClick={() => setIsCommandPaletteOpen(true)} />
+        <Header 
+          onSearchClick={() => setIsCommandPaletteOpen(true)} 
+          onMenuClick={() => setMobileSidebarOpen(!mobileSidebarOpen)} 
+        />
 
         {/* Viewport Content */}
         <main className="flex-1 p-6 md:p-8 mt-16 max-w-7xl w-full mx-auto pb-24 overflow-x-hidden">

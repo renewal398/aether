@@ -1,14 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, Bell, Moon, Sun, ShieldAlert, Check, ChevronDown, UserCheck } from "lucide-react";
+import { Search, Bell, Moon, Sun, ShieldAlert, Check, ChevronDown, UserCheck, Menu } from "lucide-react";
 import { useEhr } from "@/context/EhrContext";
 
 interface HeaderProps {
   onSearchClick: () => void;
+  onMenuClick?: () => void;
 }
 
-export default function Header({ onSearchClick }: HeaderProps) {
+export default function Header({ onSearchClick, onMenuClick }: HeaderProps) {
   const { activeRole, setActiveRole, cdsAlerts, acknowledgeAlert, currentUser } = useEhr();
   const [showAlerts, setShowAlerts] = useState(false);
   const [showRoleSelect, setShowRoleSelect] = useState(false);
@@ -39,8 +40,16 @@ export default function Header({ onSearchClick }: HeaderProps) {
 
   return (
     <header className="h-16 bg-card text-card-foreground border-b border-border px-6 flex items-center justify-between fixed top-0 right-0 z-10 w-full md:pl-20">
+      {/* Mobile Menu Toggle */}
+      <button
+        onClick={onMenuClick}
+        className="p-1.5 mr-3 rounded bg-accent text-secondary hover:text-foreground md:hidden flex items-center justify-center"
+      >
+        <Menu className="w-4 h-4" />
+      </button>
+
       {/* Search Input trigger */}
-      <div className="flex-1 max-w-md ml-16 md:ml-0">
+      <div className="flex-1 max-w-md">
         <div
           onClick={onSearchClick}
           className="flex items-center w-full px-3 py-1.5 rounded-lg border border-border bg-accent/40 text-secondary hover:border-primary/40 cursor-pointer transition-colors"

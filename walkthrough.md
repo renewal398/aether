@@ -109,6 +109,14 @@ We have successfully implemented a secure session login interface for the Aether
 14. **Prisma Generation on Vercel**:
     - **File modified**: [package.json](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/package.json)
     - **Modifications**: Updated the `"build"` script to `"prisma generate && next build"`. This forces Vercel to regenerate the Prisma Client binaries on every build cycle, preventing dependency-cache mismatch runtime crashes.
+15. **Mobile Responsive Sidebar Navigation Drawer**:
+    - **Files modified**: [page.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/page.tsx), [Sidebar.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/Sidebar.tsx), [Header.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/Header.tsx)
+    - **Modifications**:
+      - Added mobile-aware responsive layout classes to [Sidebar.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/Sidebar.tsx), sliding the sidebar completely off-screen on devices smaller than `md` (768px) and positioning it at `z-30`.
+      - Added a state-driven blurred backdrop overlay inside [page.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/app/page.tsx) that renders at `z-20` on mobile when the sidebar drawer is open. Clicking the overlay automatically closes it.
+      - Integrated a hamburger menu button inside [Header.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/components/Header.tsx) (visible on mobile only) to toggle the sidebar open state.
+      - Auto-closes the mobile drawer navigation once a menu item is tapped, optimizing UX flow.
+
 
 
 

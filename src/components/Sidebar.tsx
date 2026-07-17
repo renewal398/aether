@@ -27,9 +27,11 @@ interface SidebarProps {
   setCollapsed: (collapsed: boolean) => void;
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  mobileOpen?: boolean;
+  setMobileOpen?: (open: boolean) => void;
 }
 
-export default function Sidebar({ collapsed, setCollapsed, activeTab, setActiveTab }: SidebarProps) {
+export default function Sidebar({ collapsed, setCollapsed, activeTab, setActiveTab, mobileOpen, setMobileOpen }: SidebarProps) {
   const { activeRole, currentUser } = useEhr();
 
   // Dynamic Navigation definitions based on active role
@@ -104,8 +106,10 @@ export default function Sidebar({ collapsed, setCollapsed, activeTab, setActiveT
 
   return (
     <aside
-      className={`fixed top-0 left-0 z-20 h-screen bg-card text-card-foreground border-r border-border flex flex-col transition-all duration-300 ${
+      className={`fixed top-0 left-0 z-30 h-screen bg-card text-card-foreground border-r border-border flex flex-col transition-all duration-300 md:translate-x-0 ${
         collapsed ? "w-16" : "w-64"
+      } ${
+        mobileOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
       {/* Brand logo header */}
@@ -161,7 +165,10 @@ export default function Sidebar({ collapsed, setCollapsed, activeTab, setActiveT
           return (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => {
+                setActiveTab(item.id);
+                if (setMobileOpen) setMobileOpen(false);
+              }}
               className={`w-full flex items-center py-2.5 px-3 rounded-lg text-sm transition-all ${
                 isActive
                   ? "bg-primary text-white shadow-md shadow-primary/10"
