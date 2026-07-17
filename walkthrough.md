@@ -106,5 +106,9 @@ We have successfully implemented a secure session login interface for the Aether
 13. **Vitals Compilation Resolution**:
     - **File modified**: [EhrContext.tsx](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/src/context/EhrContext.tsx)
     - **Modifications**: Made the `respiratoryRate` property optional inside the `Vitals` interface definition. This correctly aligns the frontend type declaration with the optional nature of the database model (`respiratoryRate Int?` in the Prisma schema) and resolves compile-time type mismatch errors on Vercel/Next.js builds when the respiratory rate field is omitted.
+14. **Prisma Generation on Vercel**:
+    - **File modified**: [package.json](file:///c:/Users/MONIQUE%20DC/Desktop/ehr/package.json)
+    - **Modifications**: Updated the `"build"` script to `"prisma generate && next build"`. This forces Vercel to regenerate the Prisma Client binaries on every build cycle, preventing dependency-cache mismatch runtime crashes.
+
 
 
